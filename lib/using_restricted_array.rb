@@ -1,4 +1,4 @@
-require_relative 'restricted_array.rb'
+require_relative "restricted_array.rb"
 # RestrictedArray can be created using a specified size, or a random size in
 # the range of 1-20 will be chosen for you.
 # All values are integers in the range of 1-221.
@@ -6,56 +6,100 @@ require_relative 'restricted_array.rb'
 
 # Calculates the length of the restricted array. All values are integers.
 # The restricted_array is terminated by 'nil' i.e. array[length] = nil
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: Time Complexity is O(n). n being length of the array,
+# this is because you will always need to look through the entire array to find the nil value.
+# there is a linear relationship between number of actions and length of Array.
+# Space complexity: Is O(1) or constant because the number of variables
+# is constant no matter how large the array is.
 def length(array)
-  raise NotImplementedError
+  index = 0
+  while array[index] != nil
+    index += 1
+  end
+  return index
 end
 
 # Prints each integer values in the array
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: O(n) where n is the length of the array,
+# iterates through each item of the array prints something n times
+# Space complexity: 0(1), constant. No matter how long the array is,
+# the same amount of space is used
 def print_array(array)
-  raise NotImplementedError
+  index = 0
+  while array[index] != nil
+    print array[index], " "
+    index += 1
+  end
 end
 
 # For an unsorted array, searches for 'value_to_find'.
 # Returns true if found, false otherwise.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: O(n), where n is the length of the array. The loop with run length number of times
+# Space complexity: O(1) constant, constant amount of space regardless of the length of the array
 def search(array, length, value_to_find)
-  raise NotImplementedError
+  length.times do |index|
+    return true if array[index] == value_to_find
+  end
+  return false
 end
 
 # Finds and returns the largest integer value the array
 # Assumes that the array is not sorted.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: O(n) where n is the length of the array. Loop will trigger length amount of times.
+# Space complexity:  O(1) constant, constant amount of space regardless of the length of the array
 def find_largest(array, length)
-  raise NotImplementedError
+  largest = nil
+  length.times do |index|
+    largest = array[index] if !largest || array[index] > largest
+  end
+  return largest
 end
 
 # Finds and returns the smallest integer value in the array
 # Assumes that the array is not sorted.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity:  O(n) where n is the length of the array. Loop will trigger length amount of times.
+# Space complexity:  O(1) constant, constant amount of space regardless of the length of the array
+
 def find_smallest(array, length)
-  raise NotImplementedError
+  smallest = nil
+  length.times do |index|
+    smallest = array[index] if !smallest || array[index] < smallest
+  end
+  return smallest
 end
 
 # Reverses the values in the integer array in place
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: O(n) where n is the length of the array. Loop will trigger length/2 number of times
+# O(n/2) the constants are dropped so it becomes O(n)
+# Space complexity: Space complexity:  O(1) constant, constant amount of space regardless of the length of the array
+
 def reverse(array, length)
-  raise NotImplementedError
+  second_index = length - 1
+  temp = nil
+  (length / 2).times do |index|
+    temp = array[index]
+    array[index] = array[second_index]
+    array[second_index] = temp
+    second_index -= 1
+  end
 end
 
 # For an array sorted in ascending order, searches for 'value_to_find'.
 # Returns true if found, false otherwise.
-# Time complexity: ?
-# Space complexity: ?
+# Time complexity: O(log n) where n is the length of the array. Each pass through the loop the "size"
+# of the array is cut in half, causing a logarithmic complexity
+# Space complexity: O(n) where n is the length of the array. there id a constant amount of space being used,
+# regardless of the length of the array.
+
 def binary_search(array, length, value_to_find)
-  raise NotImplementedError
+  high = length
+  low = 0
+  length.times do
+    return true if array[guess] == value_to_find
+    return false if high - low <= 1
+    array[guess] < value_to_find ? low = guess : high = guess
+    guess = (low + high) / 2
+  end
 end
 
 # Helper method provided to sort the array in ascending order
@@ -75,7 +119,7 @@ end
 def sort(array, length)
   length.times do |index| # outer loop - n elements
     min_index = index # assume index is where the next minimally value is
-    temp_index = index+1 # compare with values at index+1 to length-1
+    temp_index = index + 1 # compare with values at index+1 to length-1
     while temp_index < length # inner loop - n-1 elements
       if array[temp_index] < array[min_index] # found a new minimum, update min_index
         min_index = temp_index
@@ -89,4 +133,6 @@ def sort(array, length)
     end
   end
 end
+
 ## --- END OF METHODS ---
+# array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
