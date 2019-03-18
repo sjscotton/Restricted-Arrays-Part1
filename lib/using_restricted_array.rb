@@ -95,10 +95,10 @@ def binary_search(array, length, value_to_find)
   high = length
   low = 0
   length.times do
+    guess = (low + high) / 2
     return true if array[guess] == value_to_find
     return false if high - low <= 1
     array[guess] < value_to_find ? low = guess : high = guess
-    guess = (low + high) / 2
   end
 end
 
